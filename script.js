@@ -78,7 +78,7 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
-window.onload =  async () => {
+const carregaProdutos =  async () => {
   const objetoProdutos = await fetchProducts('computador');
   objetoProdutos.results.forEach((elemento) => {
     const pai = document.querySelector('.items')
@@ -88,33 +88,35 @@ window.onload =  async () => {
     const produto = createProductItemElement({id,title, thumbnail});
     pai.appendChild(produto);
   });
+}
 
-  const botaoes = document.getElementsByClassName('item__add');
-  const adiconarNoCarrinho =  async (event) => {
-    const sectionPai = event.target.parentElement
-    const ids = sectionPai.firstChild.innerText;
-    const produtoId =  await fetchItem(ids);
-    const id = produtoId.id;
-    const title = produtoId.title;
-    const price = produtoId.price
-    const produto =  createCartItemElement({id, title, price});
-    const pai = document.querySelector('.cart__items');
-    pai.appendChild(produto);
-
-    const items = document.getElementsByClassName('cart__item');
-    const paiDosItems = document.querySelector('.cart__items');
-    const removerCarrinho = (evento) => {
-      evento.target.remove();
-    };
-
-    for(let index = 0; index < items.length; index +=1){
-      items[index].addEventListener('click', removerCarrinho);
-    }
-    
+const adiconarCarrinho = async (event) => {
+  const sectionPai = event.target.parentElement
+  const ids = sectionPai.firstChild.innerText;
+  const produtoId =  await fetchItem(ids);
+  const id = produtoId.id;
+  const title = produtoId.title;
+  const price = produtoId.price
+  const produto =  createCartItemElement({id, title, price});
+  const pai = document.querySelector('.cart__items');
+  pai.appendChild(produto);
+  const items = document.getElementsByClassName('cart__item');
+  const removerCarrinho = (evento) => {
+    evento.target.remove();
+  };
+  for(let index = 0; index < items.length; index +=1){
+    items[index].addEventListener('click', removerCarrinho);
   }
- for(let indice = 0; indice < botaoes.length; indice  +=1){
-  botaoes[indice].addEventListener('click', adiconarNoCarrinho);
- };
+}
 
+
+
+
+window.onload =  async () => {
+  await carregaProdutos();
+  const botaoes = document.getElementsByClassName('item__add');
+ for(let indice = 0; indice < botaoes.length; indice  +=1){
+  botaoes[indice].addEventListener('click', adiconarCarrinho);
+ };
  
 };
