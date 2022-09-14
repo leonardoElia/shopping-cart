@@ -1,6 +1,8 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+//const { remove } = require("cypress/types/lodash");
+
 //const { fetchItem } = require("./helpers/fetchItem");
 
 // const { fetchProducts } = require("./helpers/fetchProducts");
@@ -98,12 +100,21 @@ window.onload =  async () => {
     const produto =  createCartItemElement({id, title, price});
     const pai = document.querySelector('.cart__items');
     pai.appendChild(produto);
+
+    const items = document.getElementsByClassName('cart__item');
+    const paiDosItems = document.querySelector('.cart__items');
+    const removerCarrinho = (evento) => {
+      evento.target.remove();
+    };
+
+    for(let index = 0; index < items.length; index +=1){
+      items[index].addEventListener('click', removerCarrinho);
+    }
+    
   }
  for(let indice = 0; indice < botaoes.length; indice  +=1){
-  botaoes[indice].addEventListener('click', adiconarNoCarrinho)
- }
-;
-  
+  botaoes[indice].addEventListener('click', adiconarNoCarrinho);
+ };
 
-
+ 
 };
