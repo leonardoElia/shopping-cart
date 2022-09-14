@@ -1,9 +1,9 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
-//const { remove } = require("cypress/types/lodash");
+// const { remove } = require("cypress/types/lodash");
 
-//const { fetchItem } = require("./helpers/fetchItem");
+// const { fetchItem } = require("./helpers/fetchItem");
 
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
@@ -60,7 +60,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {Element} product - Elemento do produto.
  * @returns {string} ID do produto.
  */
-const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
+// const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
 /**
  * Função responsável por criar e retornar um item do carrinho.
@@ -78,45 +78,37 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
-const carregaProdutos =  async () => {
+const carregaProdutos = async () => {
   const objetoProdutos = await fetchProducts('computador');
   objetoProdutos.results.forEach((elemento) => {
-    const pai = document.querySelector('.items')
-    const id = elemento.id;
-    const title = elemento.title
-    const thumbnail = elemento.thumbnail;
-    const produto = createProductItemElement({id,title, thumbnail});
+    const pai = document.querySelector('.items');
+    const { id, title, thumbnail } = elemento;
+    const produto = createProductItemElement({ id, title, thumbnail });
     pai.appendChild(produto);
   });
-}
+};
 
 const adiconarCarrinho = async (event) => {
-  const sectionPai = event.target.parentElement
+  const sectionPai = event.target.parentElement;
   const ids = sectionPai.firstChild.innerText;
-  const produtoId =  await fetchItem(ids);
-  const id = produtoId.id;
-  const title = produtoId.title;
-  const price = produtoId.price
-  const produto =  createCartItemElement({id, title, price});
+  const produtoId = await fetchItem(ids);
+  const { id, title, price } = produtoId;
+  const produto = createCartItemElement({ id, title, price });
   const pai = document.querySelector('.cart__items');
   pai.appendChild(produto);
   const items = document.getElementsByClassName('cart__item');
   const removerCarrinho = (evento) => {
     evento.target.remove();
   };
-  for(let index = 0; index < items.length; index +=1){
+  for (let index = 0; index < items.length; index += 1) {
     items[index].addEventListener('click', removerCarrinho);
   }
-}
+};
 
-
-
-
-window.onload =  async () => {
+window.onload = async () => {
   await carregaProdutos();
   const botaoes = document.getElementsByClassName('item__add');
- for(let indice = 0; indice < botaoes.length; indice  +=1){
+ for (let indice = 0; indice < botaoes.length; indice += 1) {
   botaoes[indice].addEventListener('click', adiconarCarrinho);
- };
- 
+ }
 };

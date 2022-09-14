@@ -1,4 +1,4 @@
-const getSavedCartItems = async (item) => {
+const getSavedCartItems = async () => {
   // seu código aqui
 };
 
