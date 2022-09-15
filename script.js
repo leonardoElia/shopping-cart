@@ -1,6 +1,12 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+
+// const saveCartItems = require("./helpers/saveCartItems");
+
 // const { remove } = require("cypress/types/lodash");
 
 // const { fetchItem } = require("./helpers/fetchItem");
@@ -95,7 +101,9 @@ const adiconarCarrinho = async (event) => {
   const { id, title, price } = produtoId;
   const produto = createCartItemElement({ id, title, price });
   const pai = document.querySelector('.cart__items');
-  pai.appendChild(produto);
+  pai.appendChild(produto); // mandando o produto para o carrinho
+  saveCartItems(pai.innerHTML); // salvando o local storage
+
   const items = document.getElementsByClassName('cart__item');
   const removerCarrinho = (evento) => {
     evento.target.remove();
@@ -107,7 +115,13 @@ const adiconarCarrinho = async (event) => {
 
 window.onload = async () => {
   await carregaProdutos();
-  const botaoes = document.getElementsByClassName('item__add');
+ 
+  const itemLocalStorage = getSavedCartItems('cartItems');
+  const carrinho = document.querySelector('.cart__items');
+  let produtoLi = document.createElement('li');
+  carrinho.innerHTML = itemLocalStorage;
+
+const botaoes = document.getElementsByClassName('item__add');
  for (let indice = 0; indice < botaoes.length; indice += 1) {
   botaoes[indice].addEventListener('click', adiconarCarrinho);
  }
