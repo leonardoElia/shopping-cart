@@ -123,8 +123,7 @@ botaoLimpar.addEventListener('click', limparCarrinho);
 window.onload = async () => {
   await carregaProdutos();
   const itemLocalStorage = getSavedCartItems('cartItems');
-  const carrinho = document.querySelector('.cart__items');
-  carrinho.innerHTML = itemLocalStorage;
+  olDoCarrinho.innerHTML = itemLocalStorage;
   const liLocalStorage = document.getElementsByTagName('li');
   for (let contadora = 0; contadora < liLocalStorage.length; contadora += 1) {
     liLocalStorage[contadora].addEventListener('click', (eve) => {
