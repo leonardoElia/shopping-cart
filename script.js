@@ -95,14 +95,18 @@ const carregaProdutos = async () => {
     pai.appendChild(produto);
   });
 };
-const controleDoCarrinho = async (event) => {
-  const sectionPai = event.target.parentElement;
+
+const AdicionarNoCarrinho = async (item) => {
+  const sectionPai = item.target.parentElement;
   const ids = sectionPai.firstChild.innerText;
   const produtoId = await fetchItem(ids);
   const { id, title, price } = produtoId;
   const produto = createCartItemElement({ id, title, price });
-  olDoCarrinho.appendChild(produto); // mandando o produto para o carrinho
-  saveCartItems(olDoCarrinho.innerHTML); // salvando o local storage
+  olDoCarrinho.appendChild(produto); 
+  saveCartItems(olDoCarrinho.innerHTML);
+}
+const controleDoCarrinho = async (event) => {
+  await AdicionarNoCarrinho(event);
   const items = document.getElementsByClassName('cart__item');
   const removerCarrinho = (evento) => {
     evento.target.remove();
