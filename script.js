@@ -94,7 +94,8 @@ const carregaProdutos = async () => {
   });
 };
 
-const adiconarCarrinho = async (event) => {
+
+const controleDoCarrinho = async (event) => {
   const sectionPai = event.target.parentElement;
   const ids = sectionPai.firstChild.innerText;
   const produtoId = await fetchItem(ids);
@@ -103,7 +104,6 @@ const adiconarCarrinho = async (event) => {
   const pai = document.querySelector('.cart__items');
   pai.appendChild(produto); // mandando o produto para o carrinho
   saveCartItems(pai.innerHTML); // salvando o local storage
-
   const items = document.getElementsByClassName('cart__item');
   const removerCarrinho = (evento) => {
     evento.target.remove();
@@ -114,9 +114,17 @@ const adiconarCarrinho = async (event) => {
   }
 };
 
+const limparCarrinho = () => {
+   const produtosDoCarrinho = document.querySelector('.cart__items');
+   produtosDoCarrinho.innerText = "";
+   localStorage.clear();
+};
+
+const botaoLimpar = document.querySelector('.empty-cart');
+botaoLimpar.addEventListener('click', limparCarrinho);
+
 window.onload = async () => {
   await carregaProdutos();
- 
   const itemLocalStorage = getSavedCartItems('cartItems');
   const carrinho = document.querySelector('.cart__items');
   carrinho.innerHTML = itemLocalStorage;
@@ -127,19 +135,12 @@ window.onload = async () => {
       let texto = localStorage.getItem('cartItems');
       let textoLi = eve.target.innerHTML;
       let novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`,'');
-      console.log(texto)
-      console.log(textoLi)
-      console.log(novoValor);
-      
       localStorage.clear();
       localStorage.setItem('cartItems', novoValor);
-
     })
   }
-  
-
 const botaoes = document.getElementsByClassName('item__add');
  for (let indice = 0; indice < botaoes.length; indice += 1) {
-  botaoes[indice].addEventListener('click', adiconarCarrinho);
+  botaoes[indice].addEventListener('click', controleDoCarrinho);
  }
 };
