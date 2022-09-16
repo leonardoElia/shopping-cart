@@ -107,6 +107,7 @@ const adiconarCarrinho = async (event) => {
   const items = document.getElementsByClassName('cart__item');
   const removerCarrinho = (evento) => {
     evento.target.remove();
+    localStorage.clear()
   };
   for (let index = 0; index < items.length; index += 1) {
     items[index].addEventListener('click', removerCarrinho);
@@ -118,8 +119,24 @@ window.onload = async () => {
  
   const itemLocalStorage = getSavedCartItems('cartItems');
   const carrinho = document.querySelector('.cart__items');
-  let produtoLi = document.createElement('li');
   carrinho.innerHTML = itemLocalStorage;
+  const liLocalStorage = document.getElementsByTagName('li');
+  for(let contadora =0; contadora < liLocalStorage.length; contadora +=1){
+    liLocalStorage[contadora].addEventListener('click', (eve) => {
+      eve.target.remove();
+      let texto = localStorage.getItem('cartItems');
+      let textoLi = eve.target.innerHTML;
+      let novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`,'');
+      console.log(texto)
+      console.log(textoLi)
+      console.log(novoValor);
+      
+      localStorage.clear();
+      localStorage.setItem('cartItems', novoValor);
+
+    })
+  }
+  
 
 const botaoes = document.getElementsByClassName('item__add');
  for (let indice = 0; indice < botaoes.length; indice += 1) {

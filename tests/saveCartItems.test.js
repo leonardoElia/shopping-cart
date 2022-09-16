@@ -14,6 +14,6 @@ describe('3 - Teste a função saveCartItems', () => {
   it('testando de a função saveCartItem é executada de maneira correta', () => {
     const item = 'carrinhoItem';
     saveCartItems('carrinhoItem');
-    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', JSON.stringify(item));
+    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', item);
   });
 });
