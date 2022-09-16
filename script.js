@@ -120,20 +120,22 @@ const limparCarrinho = () => {
 const botaoLimpar = document.querySelector('.empty-cart');
 botaoLimpar.addEventListener('click', limparCarrinho);
 
+const removeLocalStorage = (eve) => {
+  eve.target.remove();
+  const texto = localStorage.getItem('cartItems');
+  const textoLi = eve.target.innerHTML;
+  const novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`, '');
+  localStorage.clear();
+  localStorage.setItem('cartItems', novoValor);
+}
+
 window.onload = async () => {
   await carregaProdutos();
   const itemLocalStorage = getSavedCartItems('cartItems');
   olDoCarrinho.innerHTML = itemLocalStorage;
   const liLocalStorage = document.getElementsByTagName('li');
   for (let contadora = 0; contadora < liLocalStorage.length; contadora += 1) {
-    liLocalStorage[contadora].addEventListener('click', (eve) => {
-      eve.target.remove();
-      const texto = localStorage.getItem('cartItems');
-      const textoLi = eve.target.innerHTML;
-      const novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`, '');
-      localStorage.clear();
-      localStorage.setItem('cartItems', novoValor);
-    });
+    liLocalStorage[contadora].addEventListener('click', removeLocalStorage);
   }
 const botaoes = document.getElementsByClassName('item__add');
  for (let indice = 0; indice < botaoes.length; indice += 1) {
