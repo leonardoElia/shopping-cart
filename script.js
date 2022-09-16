@@ -15,6 +15,8 @@
 
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
+const olDoCarrinho = document.querySelector('.cart__items');
+
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
  * @param {string} imageSource - URL da imagem.
@@ -93,30 +95,25 @@ const carregaProdutos = async () => {
     pai.appendChild(produto);
   });
 };
-
-
 const controleDoCarrinho = async (event) => {
   const sectionPai = event.target.parentElement;
   const ids = sectionPai.firstChild.innerText;
   const produtoId = await fetchItem(ids);
   const { id, title, price } = produtoId;
   const produto = createCartItemElement({ id, title, price });
-  const pai = document.querySelector('.cart__items');
-  pai.appendChild(produto); // mandando o produto para o carrinho
-  saveCartItems(pai.innerHTML); // salvando o local storage
+  olDoCarrinho.appendChild(produto); // mandando o produto para o carrinho
+  saveCartItems(olDoCarrinho.innerHTML); // salvando o local storage
   const items = document.getElementsByClassName('cart__item');
   const removerCarrinho = (evento) => {
     evento.target.remove();
-    localStorage.clear()
+    localStorage.clear();
   };
   for (let index = 0; index < items.length; index += 1) {
     items[index].addEventListener('click', removerCarrinho);
   }
 };
-
 const limparCarrinho = () => {
-   const produtosDoCarrinho = document.querySelector('.cart__items');
-   produtosDoCarrinho.innerText = "";
+   olDoCarrinho.innerText = '';
    localStorage.clear();
 };
 
@@ -129,15 +126,15 @@ window.onload = async () => {
   const carrinho = document.querySelector('.cart__items');
   carrinho.innerHTML = itemLocalStorage;
   const liLocalStorage = document.getElementsByTagName('li');
-  for(let contadora =0; contadora < liLocalStorage.length; contadora +=1){
+  for (let contadora = 0; contadora < liLocalStorage.length; contadora += 1) {
     liLocalStorage[contadora].addEventListener('click', (eve) => {
       eve.target.remove();
-      let texto = localStorage.getItem('cartItems');
-      let textoLi = eve.target.innerHTML;
-      let novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`,'');
+      const texto = localStorage.getItem('cartItems');
+      const textoLi = eve.target.innerHTML;
+      const novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`, '');
       localStorage.clear();
       localStorage.setItem('cartItems', novoValor);
-    })
+    });
   }
 const botaoes = document.getElementsByClassName('item__add');
  for (let indice = 0; indice < botaoes.length; indice += 1) {
