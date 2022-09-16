@@ -104,16 +104,17 @@ const AdicionarNoCarrinho = async (item) => {
   const produto = createCartItemElement({ id, title, price });
   olDoCarrinho.appendChild(produto); 
   saveCartItems(olDoCarrinho.innerHTML);
-}
+};
+
+const removerDoCarrinho = (evento) => {
+  evento.target.remove();
+  localStorage.clear();
+} 
 const controleDoCarrinho = async (event) => {
   await AdicionarNoCarrinho(event);
   const items = document.getElementsByClassName('cart__item');
-  const removerCarrinho = (evento) => {
-    evento.target.remove();
-    localStorage.clear();
-  };
   for (let index = 0; index < items.length; index += 1) {
-    items[index].addEventListener('click', removerCarrinho);
+    items[index].addEventListener('click', removerDoCarrinho);
   }
 };
 const limparCarrinho = () => {
