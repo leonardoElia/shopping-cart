@@ -120,6 +120,11 @@ const limparCarrinho = () => {
 const botaoLimpar = document.querySelector('.empty-cart');
 botaoLimpar.addEventListener('click', limparCarrinho);
 
+const carregaLocalStorage = () => {
+  const itemLocalStorage = getSavedCartItems('cartItems');
+  olDoCarrinho.innerHTML = itemLocalStorage;
+}
+
 const removeLocalStorage = (eve) => {
   eve.target.remove();
   const texto = localStorage.getItem('cartItems');
@@ -131,8 +136,7 @@ const removeLocalStorage = (eve) => {
 
 window.onload = async () => {
   await carregaProdutos();
-  const itemLocalStorage = getSavedCartItems('cartItems');
-  olDoCarrinho.innerHTML = itemLocalStorage;
+  carregaLocalStorage();
   const liLocalStorage = document.getElementsByTagName('li');
   for (let contadora = 0; contadora < liLocalStorage.length; contadora += 1) {
     liLocalStorage[contadora].addEventListener('click', removeLocalStorage);
