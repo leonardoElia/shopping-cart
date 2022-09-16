@@ -1,6 +1,8 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+//const { pick } = require("cypress/types/lodash");
+
 // const getSavedCartItems = require("./helpers/getSavedCartItems");
 
 // const getSavedCartItems = require("./helpers/getSavedCartItems");
@@ -98,6 +100,21 @@ const carregaProdutos = async () => {
   });
 };
 
+const adiconarPreco = (price) => {
+  totalPreco += price;
+  exibirPreco.innerHTML = `Preço Total $${totalPreco}`
+}
+
+const removerPreco = (priceRemove) => {
+  const textoTodo = priceRemove.target.innerText;
+  const textoSeparado = textoTodo.split(' ');
+  let preco = textoSeparado[textoSeparado.length - 1];
+  preco = preco.replace('$', '');
+  const precoConverido = parseFloat(preco);
+  totalPreco -= precoConverido;
+  exibirPreco.innerHTML = `Preço Total $${totalPreco}`;
+}
+
 const AdicionarNoCarrinho = async (item) => {
   const sectionPai = item.target.parentElement;
   const ids = sectionPai.firstChild.innerText;
@@ -106,18 +123,11 @@ const AdicionarNoCarrinho = async (item) => {
   const produto = createCartItemElement({ id, title, price });
   olDoCarrinho.appendChild(produto); 
   saveCartItems(olDoCarrinho.innerHTML);
-  totalPreco += price;
-  exibirPreco.innerHTML = `Preço Total $${totalPreco}`;
+  adiconarPreco(price);
 };
 
 const removerDoCarrinho = (evento) => {
-  const textoTodo = evento.target.innerText;
-  const textoSeparado = textoTodo.split(' ');
-  let preco = textoSeparado[textoSeparado.length - 1];
-  preco = preco.replace('$', '');
-  const precoConverido = parseFloat(preco);
-  totalPreco -= precoConverido;
-  exibirPreco.innerHTML = `Preço Total $${totalPreco}`;
+  removerPreco(evento);
   evento.target.remove();
   localStorage.clear();
 };
