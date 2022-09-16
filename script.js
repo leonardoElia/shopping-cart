@@ -16,6 +16,8 @@
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
 const olDoCarrinho = document.querySelector('.cart__items');
+let totalPreco = 0;
+const exibirPreco = document.querySelector('.total-price');
 
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
@@ -104,12 +106,21 @@ const AdicionarNoCarrinho = async (item) => {
   const produto = createCartItemElement({ id, title, price });
   olDoCarrinho.appendChild(produto); 
   saveCartItems(olDoCarrinho.innerHTML);
+  totalPreco += price;
+  exibirPreco.innerHTML = `Preço Total $${totalPreco}`;
 };
 
 const removerDoCarrinho = (evento) => {
+  const textoTodo = evento.target.innerText;
+  const textoSeparado = textoTodo.split(' ');
+  let preco = textoSeparado[textoSeparado.length - 1];
+  preco = preco.replace('$', '');
+  const precoConverido = parseFloat(preco);
+  totalPreco -= precoConverido;
+  exibirPreco.innerHTML = `Preço Total $${totalPreco}`;
   evento.target.remove();
   localStorage.clear();
-} 
+};
 const controleDoCarrinho = async (event) => {
   await AdicionarNoCarrinho(event);
   const items = document.getElementsByClassName('cart__item');
@@ -128,7 +139,7 @@ botaoLimpar.addEventListener('click', limparCarrinho);
 const carregaLocalStorage = () => {
   const itemLocalStorage = getSavedCartItems('cartItems');
   olDoCarrinho.innerHTML = itemLocalStorage;
-}
+};
 
 const removeLocalStorage = (eve) => {
   eve.target.remove();
@@ -137,7 +148,7 @@ const removeLocalStorage = (eve) => {
   const novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`, '');
   localStorage.clear();
   localStorage.setItem('cartItems', novoValor);
-}
+};
 
 window.onload = async () => {
   await carregaProdutos();
