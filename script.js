@@ -1,22 +1,6 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
-//const { pick } = require("cypress/types/lodash");
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
-// const saveCartItems = require("./helpers/saveCartItems");
-
-// const { remove } = require("cypress/types/lodash");
-
-// const { fetchItem } = require("./helpers/fetchItem");
-
-// const { fetchProducts } = require("./helpers/fetchProducts");
-
-// Fique a vontade para modificar o código já escrito e criar suas próprias funções!
-
 const olDoCarrinho = document.querySelector('.cart__items');
 let totalPreco = 0;
 const exibirPreco = document.querySelector('.total-price');
@@ -102,8 +86,9 @@ const carregaProdutos = async () => {
 
 const adiconarPreco = (price) => {
   totalPreco += price;
-  exibirPreco.innerHTML = `Preço Total $${totalPreco}`
-}
+  exibirPreco.innerHTML = `Preço Total $${totalPreco.toFixed(2)}`;
+  localStorage.setItem('preco', totalPreco.toFixed(2));
+};
 
 const removerPreco = (priceRemove) => {
   const textoTodo = priceRemove.target.innerText;
@@ -112,8 +97,8 @@ const removerPreco = (priceRemove) => {
   preco = preco.replace('$', '');
   const precoConverido = parseFloat(preco);
   totalPreco -= precoConverido;
-  exibirPreco.innerHTML = `Preço Total $${totalPreco}`;
-}
+  exibirPreco.innerHTML = `Preço Total $${totalPreco.toFixed(2)}`;
+};
 
 const AdicionarNoCarrinho = async (item) => {
   const sectionPai = item.target.parentElement;
@@ -139,7 +124,9 @@ const controleDoCarrinho = async (event) => {
   }
 };
 const limparCarrinho = () => {
-   olDoCarrinho.innerText = '';
+   olDoCarrinho.innerHTML = '';
+   exibirPreco.innerHTML = 'Preço Total $0';
+   totalPreco = 0;
    localStorage.clear();
 };
 
@@ -149,6 +136,8 @@ botaoLimpar.addEventListener('click', limparCarrinho);
 const carregaLocalStorage = () => {
   const itemLocalStorage = getSavedCartItems('cartItems');
   olDoCarrinho.innerHTML = itemLocalStorage;
+  const precoLocalStorage = localStorage.getItem('preco');
+  exibirPreco.innerHTML = `Preço Total $${precoLocalStorage}`;
 };
 
 const removeLocalStorage = (eve) => {
@@ -156,8 +145,17 @@ const removeLocalStorage = (eve) => {
   const texto = localStorage.getItem('cartItems');
   const textoLi = eve.target.innerHTML;
   const novoValor = texto.replace(`<li class="cart__item">${textoLi}</li>`, '');
+  let precoAtual = localStorage.getItem('preco');
+  precoAtual = parseFloat(precoAtual);
+  const separando = textoLi.split(' ');
+  let precoNoLi = separando[separando.length - 1];
+  precoNoLi = precoNoLi.replace('$', '');
+  const precoNoLiCovert = parseFloat(precoNoLi);
+  const novoPreco = precoAtual - precoNoLiCovert;
+  exibirPreco.innerHTML = `Preço Total $${novoPreco.toFixed(2)}`;
   localStorage.clear();
   localStorage.setItem('cartItems', novoValor);
+  localStorage.setItem('preco', novoPreco.toFixed(2));
 };
 
 window.onload = async () => {

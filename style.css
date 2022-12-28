@@ -102,6 +102,11 @@ body {
   box-sizing: border-box;
 }
 
+.item:hover{
+  border: 1px solid blue;
+}
+
+
 .item .item__id {
   display: none;
 }
@@ -124,7 +129,14 @@ body {
   cursor: pointer;
   margin: 0;
   padding: 10px;
+  font-weight: bold;
+  border-radius: 5px;
   color: white;
+}
+
+.item .item__add:active {
+  transform: scale(.9);
+   transition: all 100ms ease;
 }
 
 .cart {
@@ -144,6 +156,14 @@ body {
   width: 170px;
   height: 35px;
   margin: 0 auto;
+  margin-top: 10px;
   border: 2px solid rgb(5, 52, 219);
+  border-radius: 5px;
+  cursor: pointer;
   background-color: rgb(249, 249, 246);
 }
+
+li {
+  margin-bottom: 10px;
+}
+
