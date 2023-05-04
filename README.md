@@ -14,7 +14,7 @@ Para complementar também nesse projeto utilizo o jest para realização de test
 * API do mercado livre
 
 ## acesse o link para visualizar a aplicação
-[]()
+[Projeto shopping-cart](https://shopping-cart-zeta-three.vercel.app/)
 
 ## como rodar o projeto localmente
 1. faça o clone desde repositorio 
