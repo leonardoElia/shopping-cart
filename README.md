@@ -2,8 +2,8 @@
 
 ## sobre o projeto
 Você está querendo comprar um novo computador para rodar melhor os seus jogos? então venha conhecer meu proejeto shopping-cart. O shopping cart é um projeto 
-onde eu consumo a api do mercado livre para trazes produtos relacionados a informática. Foi meu primeiro projeto consumindo uma api então ele foi fundamental para 
-meu aprendizado de um consumo de API e entender a importância de utilizar uma API em um projeto, e também esse foi meu primeiro projeto utilizando o localStorage do
+onde eu consumo a api do mercado livre para trazer produtos relacionados a informática. Foi meu primeiro projeto consumindo uma api então ele foi fundamental para 
+meu aprendizado de um consumo de api e entender a importância de elas tem em um projeto, e também esse foi meu primeiro projeto utilizando o localStorage do
 navegador foi uma otima experência que me deu conhecimento desse recurso que os navegadores tem a a importância de sua utilização. <br>
 Para complementar também nesse projeto utilizo o jest para realização de testes unitarios.
 ## tecnologias e ferramentas utilizadas
